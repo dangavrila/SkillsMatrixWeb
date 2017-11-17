@@ -1,0 +1,117 @@
+﻿@model SkillsMatrixWeb.ViewModels.TechnologiesViewModel
+@{
+    ViewBag.Title = "Technologies";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Technologies</h2>
+        <div class="panel panel-default">
+            <h3>Insert a new item</h3>
+            <h4>Write the name of the technology you wish to have in the list and then click "Add":</h4>
+
+            <form asp-controller="App" asp-action="Technologies" method="post">
+                Technology: <input asp-for="ViewModel.Name" />
+                Version: <input asp-for="ViewModel.Version" />
+                <button type="submit">Add</button>
+            </form>
+
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Available technologies</div>
+            <h3>Available technologies</h3>
+            <div class="panel-body">
+                <ul>
+                    @*@{int i = 1;}
+                    @foreach (var item in @Model.ViewModels)
+                    {
+                        <li id="@(i)">
+                            @item.Name  --- @item.Version;
+                            @*<a asp-controller="App" asp-action="EditTechnology" method="post">Edit</a>
+                            <a asp-controller="App" asp-action="DeleteTechnology" asp-for="@ViewBag" method="post">Delete</a>
+
+                            @Html.ActionLink("EditTechnology", "App", new { id = @Model.ViewModel.Id}) |
+                            <div class="delete-section">
+                                <a class="delete-link" href="@Url.Action("DeleteTechnology", new {id = @Model.ViewModel.Id})">Delete</a>
+                                <div class="btn btn-primary delete-confirm" style="display:none" data-delete-id="@Model.ViewModel.Id">Confirm Delete</div>
+                            </div>
+
+
+
+                        </li>
+                        i++;
+                    }*@
+
+                    @foreach (var item in @Model.ViewModels)
+                    {
+                        <li>@item.Name, version @item.Version</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*@section scripts{
+    <script type="text/javascript">
+    $(function () {
+        $("a.delete-link").click(function () {
+            var deleteLink = $(this);
+            deleteLink.hide();
+            var confirmButton = deleteLink.siblings(".delete-confirm");
+            confirmButton.show();
+
+            var cancelDelete =  function () {
+                removeEvents();
+                showDeleteLink();
+            };
+
+            var deleteItem = function () {
+                removeEvents();
+                confirmButton.hide();
+                $.post(
+                    '@Url.Action("Delete")',
+                    AddAntiForgeryToken({ id: confirmButton.attr('data-delete-id') }))
+                   .done(function () {
+                       var parentRow = deleteLink.parents("tr:first");
+                       parentRow.fadeOut('fast', function () {
+                           parentRow.remove();
+                       });
+                   }).fail(function (data) {
+                       alert("error");
+                   });
+                return false;
+            };
+
+            var removeEvents = function () {
+                confirmButton.off("click", deleteItem);
+                $(document).on("click", cancelDelete);
+                $(document).off("keypress", onKeyPress);
+            };
+
+            var showDeleteLink = function () {
+                confirmButton.hide();
+                deleteLink.show();
+            };
+
+            var onKeyPress = function (e) {
+                //Cancel if escape key pressed
+                if (e.which == 27) {
+                    cancelDelete();
+                }
+            };
+
+            confirmButton.on("click", deleteItem);
+            $(document).on("click", cancelDelete);
+            $(document).on("keypress", onKeyPress);
+
+            return false;
+        });
+
+        AddAntiForgeryToken = function (data) {
+            data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+            return data;
+        };
+    });
+    </script>
+}*@

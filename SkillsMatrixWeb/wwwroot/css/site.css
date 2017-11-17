@@ -1,0 +1,57 @@
+﻿#logo {
+    height: 24px;
+    left: 50px;
+    position: absolute;
+    top: 27px;
+    width: 61px;
+}
+
+.menu {
+    margin: 65px 0 0 0;
+    font-size: 18px;
+    
+}
+
+    .menu .li {
+        list-style-type: none;
+    }
+
+    .menu li.active{
+        font-weight: bold;
+    }
+
+ul.nav li a {
+    color: white;
+}
+
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: #322bd4;
+}
+
+#sidebar {
+    background: #4178be;
+    color: #ffffff;
+    position: fixed;
+    height: 100%;
+    width: 260px;
+    overflow: hidden;
+    left: 0;
+    margin: 0;
+    transition: left ease .25s;
+}
+
+    #sidebar.hide-sidebar{
+        left: -260px;
+        transition: left ease .25s;
+    }
+
+#wrapper{
+    margin: 0 0 0 260px;
+    transition: margin-left 0.25s;
+}
+
+    #wrapper.hide-sidebar {
+        margin-left: 0;
+        transition: margin-left 0.25s;
+    }

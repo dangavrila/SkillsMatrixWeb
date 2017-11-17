@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "SkillsMatrixContextConnection": "Server=localhost; Database=SkillsMatrixDb;Trusted_Connection=True;Integrated Security = True;MultipleActiveResultSets=True"
+  }
+}
