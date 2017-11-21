@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace SkillsMatrixWeb.Models
 {
-    public class UserProject : IdentityUser
+    public class ApplicationUser : IdentityUser<Guid>
     {
-        public int Id { get; set; }
         public DateTime EnrollDate { get; set; }
     }
 }

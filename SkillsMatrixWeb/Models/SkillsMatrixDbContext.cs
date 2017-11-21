@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SkillsMatrixWeb.Models
 {
-    public class SkillsMatrixDbContext : IdentityDbContext<UserProject>
+    public class SkillsMatrixDbContext : DbContext
     {
         private readonly IConfigurationRoot _config;
 

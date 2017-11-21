@@ -7,9 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Web\AuthController.cs" />
+    <Compile Remove="Models\ApplicationDbContext.cs" />
+    <Compile Remove="Models\ApplicationRole.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Auth\Login.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.0" />
@@ -24,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Auth\" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="wwwroot\lib\kendo-ui\" />
   </ItemGroup>

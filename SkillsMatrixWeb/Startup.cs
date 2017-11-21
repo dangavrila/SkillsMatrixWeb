@@ -11,7 +11,6 @@ using SkillsMatrixWeb.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Design;
 using Newtonsoft.Json.Serialization;
-using Microsoft.AspNetCore.Identity;
 
 namespace SkillsMatrixWeb
 {
@@ -38,23 +37,6 @@ namespace SkillsMatrixWeb
         {
             services.AddSingleton(_config);
 
-            services.AddLogging();
-
-            services.AddIdentity<UserProject, IdentityRole>()
-            .AddEntityFrameworkStores<SkillsMatrixDbContext>()
-            .AddDefaultTokenProviders();
-
-            services.Configure<IdentityOptions>(config =>
-            {
-                config.Password.RequiredLength = 8;
-                config.User.RequireUniqueEmail = true;
-            });
-
-            services.ConfigureApplicationCookie(config =>
-            {
-                config.LoginPath = "/Auth/Login";
-            });
-
             services.AddDbContext<SkillsMatrixDbContext>();
             
             services.AddScoped<IProjectsRepository, ProjectsRepository>();
@@ -64,6 +46,8 @@ namespace SkillsMatrixWeb
             services.AddScoped<IEmployeesRepository, EmployeesRepository>();
 
             services.AddTransient<SeedDataSkillsMatrixContext>();
+
+            services.AddLogging();
 
             services
                 .AddMvc();
@@ -85,8 +69,6 @@ namespace SkillsMatrixWeb
             }
 
             app.UseStaticFiles();
-
-            AuthAppBuilderExtensions.UseAuthentication(app);
 
             app.UseMvc(config =>
             {
