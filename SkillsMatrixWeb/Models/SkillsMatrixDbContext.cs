@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SkillsMatrixWeb.Models
 {
-    public class SkillsMatrixDbContext : DbContext
+    public class SkillsMatrixDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         private readonly IConfigurationRoot _config;
 
@@ -37,6 +38,8 @@ namespace SkillsMatrixWeb.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ApplicationUser>().HasKey(a => a.Id);
+
             modelBuilder.Entity<TechnologiesInTechnologiesStack>()
                 .HasKey(tts => new { tts.TechnologyId, tts.TechnologyStackId });
 

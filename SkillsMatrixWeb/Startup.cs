@@ -11,6 +11,7 @@ using SkillsMatrixWeb.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Design;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
 
 namespace SkillsMatrixWeb
 {
@@ -37,17 +38,49 @@ namespace SkillsMatrixWeb
         {
             services.AddSingleton(_config);
 
+            services.AddLogging();
+
             services.AddDbContext<SkillsMatrixDbContext>();
+
+            services.AddTransient<SeedDataSkillsMatrixContext>();
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+            .AddEntityFrameworkStores<SkillsMatrixDbContext>()
+            .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(config =>
+            {
+                // Password settings
+                config.Password.RequireDigit = true;
+                config.Password.RequiredLength = 8;
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequireUppercase = true;
+                config.Password.RequireLowercase = false;
+                config.Password.RequiredUniqueChars = 6;
+
+                // Lockout settings
+                config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                config.Lockout.MaxFailedAccessAttempts = 10;
+                config.Lockout.AllowedForNewUsers = true;
+
+                // User settings
+                config.User.RequireUniqueEmail = true;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.LoginPath = "/Auth/Login";
+                options.LogoutPath = "/Auth/Logout";
+                options.Cookie.Expiration = TimeSpan.FromDays(150);
+                options.SlidingExpiration = true;
+            });
             
             services.AddScoped<IProjectsRepository, ProjectsRepository>();
 
             services.AddScoped<ITechnologyRepository, TechnologyRepository>();
 
             services.AddScoped<IEmployeesRepository, EmployeesRepository>();
-
-            services.AddTransient<SeedDataSkillsMatrixContext>();
-
-            services.AddLogging();
 
             services
                 .AddMvc();
@@ -69,6 +102,8 @@ namespace SkillsMatrixWeb
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(config =>
             {

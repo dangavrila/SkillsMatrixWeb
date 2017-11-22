@@ -1,21 +1,36 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SkillsMatrixWeb.Models
 {
-    public class SeedDataSkillsMatrixContext
+    public class SeedDataSkillsMatrixContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         private SkillsMatrixDbContext _context;
+        private UserManager<ApplicationUser> _userManager;
 
-        public SeedDataSkillsMatrixContext(SkillsMatrixDbContext context)
+        public SeedDataSkillsMatrixContext(SkillsMatrixDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task EnsureSeedDataAsync()
         {
+            if (await _userManager.FindByEmailAsync("dan.gavrila@ibm.com") == null)
+            {
+                var user = new ApplicationUser()
+                {
+                    UserName = "dangavrila",
+                    Email = "dan.gavrila@ibm.com",
+                    EnrollDate = DateTime.Now
+                };
+                await _userManager.CreateAsync(user, "d@nPAS5!");
+            }
+
             var technologies = new List<Technology>() {
                         new Technology() { Name = "ASP.NET MVC", Version = "5" }, //0
                         new Technology() { Name = "C#", Version = "6" }, //1
@@ -226,7 +241,8 @@ namespace SkillsMatrixWeb.Models
                     Deadline = new DateTime(2017, 11, 15),
                     Location = "Bucharest",
                     MinimumSkillLevel = 3,
-                    Seats = new List<Seat>() { newSeat01 }
+                    Seats = new List<Seat>() { newSeat01 },
+                    UserName = "dangavrila"
                 };
 
                 var newProject02 = new Project()
@@ -236,7 +252,8 @@ namespace SkillsMatrixWeb.Models
                     Deadline = new DateTime(2018, 01, 12),
                     Location = "Hamburg",
                     MinimumSkillLevel = 2,
-                    Seats = new List<Seat>() { newSeat02, newSeat03 }
+                    Seats = new List<Seat>() { newSeat02, newSeat03 },
+                    UserName = "dangavrila"
                 };
 
                 _context.Projects.AddRange(new[] { newProject01, newProject02 });

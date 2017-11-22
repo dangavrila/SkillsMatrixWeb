@@ -12,6 +12,7 @@ namespace SkillsMatrixWeb.Models
         public DateTime Deadline { get; set; }
         public string Location { get; set; }
         public int MinimumSkillLevel { get; set; }
+        public string UserName { get; set; }
 
         public ICollection<Seat> Seats { get; set; }
         

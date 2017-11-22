@@ -1,4 +1,5 @@
 ﻿using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,12 @@ namespace SkillsMatrixWeb.Controllers.Web
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult ProjectToEmployee()
+        {
             ViewBag.inlineDefault = GetDemoSearchResults();
 
             var projects = this._projectsRepository.GetAllProjects();
@@ -44,16 +51,18 @@ namespace SkillsMatrixWeb.Controllers.Web
             {
                 projectsVM.ProjectsList.Add(new SelectListItem() { Value = p.Id.ToString(), Text = p.Name });
             }
-
             return View(projectsVM);
         }
 
+        [Authorize]
         public IActionResult EmployeeToProject()
         {
             return View();
         }
 
+
         [HttpPost]
+        [Authorize]
         public IActionResult Technologies(TechnologiesViewModel techListModel)
         {
             if (ModelState.IsValid)
@@ -68,6 +77,7 @@ namespace SkillsMatrixWeb.Controllers.Web
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult EditTechnology(TechnologiesViewModel techListModel)
         {
             if (ModelState.IsValid)
@@ -82,6 +92,7 @@ namespace SkillsMatrixWeb.Controllers.Web
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult DeleteTechnology(string itemName)
         {
             
@@ -97,7 +108,7 @@ namespace SkillsMatrixWeb.Controllers.Web
             return Technologies();
         }
 
-
+        [Authorize]
         public IActionResult Technologies()
         {
             var technologies = this._technologyRepository.GetAllTechnologies();
