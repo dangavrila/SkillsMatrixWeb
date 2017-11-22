@@ -19,7 +19,6 @@ namespace SkillsMatrixWeb
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:52393")
                 .UseStartup<Startup>()
                 .Build();
     }
